@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}
+    {% if object %}
+        编辑课程 "{{ object.title }}"
+    {% else %}
+        创建新课程
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    <h1>
+        {% if object %}
+            编辑课程 "{{ object.title }}"
+        {% else %}
+            创建新课程
+        {% endif %}
+    </h1>
+    <div class="module">
+        <h2>课程信息</h2>
+        <form action="." method="post">
+            {{ form.as_p }}
+            {% csrf_token %}
+            <p><input type="submit" value="保存课程"></p>
+        </form>
+    </div>
+{% endblock %}

@@ -1,0 +1,40 @@
+{% load staticfiles %}
+{% load course %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>{% block title %}Educa{% endblock %}</title>
+    <link href="{% static "css/base.css" %}" rel="stylesheet">
+</head>
+<body>
+     <div id="header">
+      <a href="/" class="logo">Educa</a>
+       <ul class="menu">
+         {% if request.user.is_authenticated %}
+             <li><a href="{% url "logout" %}">注销</a></li>
+             {% if request.user|is_teacher %}
+                 <li><a href="{% url "manage_course_list" %}">管理我的课程</a></li>
+             {% else %}
+                 <li><a href="{% url "student_course_list" %}">我参加的课程</a></li>
+             {% endif %}
+         {% else %}
+             <li><a href="{% url "login" %}">登录</a></li>
+             <li><a href="{% url "student_registration" %}">注册</a></li>
+         {% endif %}
+       </ul>
+     </div>
+     <div id="content">
+       {% block content %}
+       {% endblock %}
+     </div>
+     <script src="https://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+     <script src="https://cdn.bootcss.com/jqueryui/1.11.4/jquery-ui.min.js"></script>
+     <script>
+       $(document).ready(function() {
+         {% block domready %}
+         {% endblock %}
+       });
+     </script>
+   </body>
+</html>

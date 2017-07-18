@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}登录{% endblock %}
+
+{% block content %}
+     <h1>欢迎使用</h1>
+     <div class="module">
+       {% if form.errors %}
+         <p>账号密码有误. 请重新尝试.</p>
+       {% else %}
+         <p>请填入账号密码登录:</p>
+       {% endif %}
+       <div class="login-form">
+         <form action="{% url 'login' %}" method="post">
+           {{ form.as_p }}
+           {% csrf_token %}
+           <input type="hidden" name="next" value="{{ next }}" />
+           <p><input type="submit" value="登录"></p>
+         </form>
+       </div>
+     </div>
+{% endblock %}

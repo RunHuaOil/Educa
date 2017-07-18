@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block title %}
+    {{ object.title }}
+{% endblock %}
+
+{% block content %}
+    {{ get_context_object_name }}
+    {% with subject=course.subject %}
+        <h1>
+            {{ object.title }}
+        </h1>
+        <div class="module">
+            <h2>介绍</h2>
+            <p>
+                <a href="{% url "course_list_subject" subject.slug %}">{{ subject.title }}</a>.
+                {{ course.modules.count }} 个章节.
+                讲师: {{ course.owner.get_short_name }}
+            </p>
+            {{ object.overview|linebreaks }}
+            {% if request.user.is_authenticated %}
+                <form action="{% url "student_enroll_course" %}" method="post">
+                    {{ enroll_form }}
+                    {% csrf_token %}
+                    <input type="submit" class="button" value="马上报名参加">
+                </form>
+            {% else %}
+                <a href="{% url "student_registration" %}" class="button">
+                    注册&报名
+                </a>
+            {% endif %}
+        </div>
+    {% endwith %}
+{% endblock %}

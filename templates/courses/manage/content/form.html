@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}
+    {% if object %}
+        编辑 "{{ object.title }}"
+    {% else %}
+        添加小节内容
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    <h1>
+        {% if object %}
+            编辑小节 "{{ object.title }}"
+        {% else %}
+            添加小节内容
+        {% endif %}
+    </h1>
+    <div class="module">
+        <h2>小节信息</h2>
+        <form action="" method="post" enctype="multipart/form-data">
+            {{ form.as_p }}
+            {% csrf_token %}
+            <p><input type="submit" value="保存内容"></p>
+        </form>
+    </div>
+{% endblock %}
